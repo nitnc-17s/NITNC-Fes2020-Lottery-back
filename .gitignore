@@ -12,7 +12,8 @@
 
 # secret file
 secrets.env
-/conf/*.conf
+/conf/*
+!/conf/sample.config.yaml
 
 # vim temp file
 *.swp

@@ -3,6 +3,7 @@ FROM golang:1.15.2 as develop
 WORKDIR /go/src/lottery_back
 COPY . .
 
+EXPOSE 8080
 CMD /bin/bash
 
 
@@ -23,3 +24,5 @@ COPY --from=builder /go/bin/lotery-back .
 COPY --from=builder /go/src/lottery_back/conf/ ./conf/
 COPY --from=builder /go/src/lottery_back/public/ ./public/
 ENTRYPOINT [ "./lotery-back" ]
+
+EXPOSE 8080
