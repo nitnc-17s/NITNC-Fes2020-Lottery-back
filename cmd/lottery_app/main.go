@@ -1,9 +1,9 @@
 package main
 
 import (
-	"lottery_back/pkg/api"
+	"lottery_back/pkg/server"
 )
 
 func main() {
-	api.Generate()
+	server.Generate()
 }

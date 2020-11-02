@@ -1,36 +1,13 @@
-package api
+package server
 
 import (
 	"log"
 	"net/http"
-	"sync"
 	"time"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/gorilla/websocket"
 )
-
-// App is websocket app data
-type App struct {
-	lotteryData *lottery.Data
-	clients     map[*websocket.Conn]bool
-	upgrader    websocket.Upgrader
-	sync.RWMutex
-}
-
-// Generate is websocket app generate
-func Generate() App {
-	return App{
-		lotteryData: lottery.Generate(),
-		clients:     make(map[*websocket.Conn]bool),
-		upgrader: websocket.Upgrader{
-			CheckOrigin: func(r *http.Request) bool {
-				return true
-			},
-		},
-	}
-}
 
 // Up is Server Start
 func (app *App) Up(url string) {
