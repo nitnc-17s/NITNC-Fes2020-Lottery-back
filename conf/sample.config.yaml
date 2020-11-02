@@ -1,4 +1,5 @@
 server:
-  host: "https://example.com"
+  host:
+    - "https://example.com"
 api:
   key: "pD1rfI18T/ob0QyM1zcdtUbSUW7zbkFZ" # `openssl rand -base64 24`
