@@ -8,15 +8,16 @@ import (
 )
 
 type config struct {
-	Server server `yaml:"server"`
-}
-
-type server struct {
-	Host string `yaml:"host"`
+	Server struct {
+		Host []string `yaml:"host"`
+	} `yaml:"server"`
+	Api struct {
+		Key string `yaml:"key"`
+	} `yaml:"api"`
 }
 
 func loadConfig() *config {
-	f, err := os.Open("conf/config.yml")
+	f, err := os.Open("conf/config.yaml")
 	if err != nil {
 		log.Fatal("Config Open error:", err)
 		return nil

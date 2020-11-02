@@ -2,6 +2,8 @@
 
 ## フロントエンド
 
+`https://crow31415.net`
+
 ### /view/public
 
 #### 概要
@@ -59,7 +61,9 @@
 
 ## バックエンド
 
-### /api/ws
+`https://api.crow31415.net`
+
+### /ws
 
 #### JSON (Server -> Client)
 
@@ -89,7 +93,7 @@
   - 当選者クラス
   - e.g.) `4I`
 
-### /api/operation
+### /operation
 
 #### JSON (Client -> Server)
 
