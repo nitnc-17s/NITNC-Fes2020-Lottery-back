@@ -1,6 +1,7 @@
 package server
 
 import (
+	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
@@ -32,8 +33,8 @@ func GenerateWsApp() WsApp {
 type JSONData interface{} // もう少しマシな書き方がある気がする
 
 // wsHandler is websocket connection handler
-func (wsApp *WsApp) wsHandler(w http.ResponseWriter, r *http.Request) {
-	ws, err := wsApp.upgrader.Upgrade(w, r, nil)
+func (wsApp *WsApp) wsHandler(ctx *gin.Context) {
+	ws, err := wsApp.upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
 	if err != nil {
 		log.Printf("error: %v", err)
 		return

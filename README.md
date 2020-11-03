@@ -63,7 +63,7 @@
 
 `https://api.crow31415.net`
 
-### /ws
+### GET(WebSocket) /ws
 
 #### JSON (Server -> Client)
 
@@ -97,7 +97,7 @@
   - 当選者クラス
   - e.g.) `4I`
 
-### /operation
+### POST /operation
 
 #### JSON (Client -> Server)
 
@@ -116,7 +116,7 @@
 - `prize_id`
   - 操作対象の景品番号
   - e.g.) `39`
-- `operate`
+- `operation`
   - 操作内容
   - コマンド一覧
     - `init`
