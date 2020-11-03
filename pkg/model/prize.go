@@ -5,7 +5,7 @@ import (
 	"errors"
 	"io"
 	"log"
-	"lottery_back/pkg/server"
+	"lottery_back/pkg/config"
 	"lottery_back/pkg/util"
 	"os"
 	"strconv"
@@ -18,11 +18,10 @@ type Prize struct {
 
 var prizes []Prize
 
-func loadPrizes(server *server.Server) {
+func loadPrizes(config config.Config) {
 	prizes = []Prize{}
 
-	f, err := os.Open(server.Config.ResourcePath.Prize)
-
+	f, err := os.Open(config.ResourcePath.Prize)
 	util.CheckFatalError(err)
 	defer f.Close()
 
@@ -33,16 +32,17 @@ func loadPrizes(server *server.Server) {
 
 	i := 0
 	for {
-		// 見出し行スキップ
-		if i == 0 {
-			continue
-		}
-
 		record, err := reader.Read() // 1行読み出す
 		if err == io.EOF {
 			break
 		} else {
 			util.CheckFatalError(err)
+		}
+
+		// 見出し行スキップ
+		if i == 0 {
+			i++
+			continue
 		}
 
 		id, err := strconv.Atoi(record[0])

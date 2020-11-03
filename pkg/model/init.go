@@ -1,9 +1,11 @@
 package model
 
-import "lottery_back/pkg/server"
+import (
+	"lottery_back/pkg/config"
+)
 
-func Init(server *server.Server) {
-	loadApplicants(server)
-	loadPrizes(server)
+func Init(config config.Config) {
+	loadApplicants(config)
+	loadPrizes(config)
 	initResults()
 }

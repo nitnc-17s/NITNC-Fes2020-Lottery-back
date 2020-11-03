@@ -5,7 +5,7 @@ import (
 	"errors"
 	"io"
 	"log"
-	"lottery_back/pkg/server"
+	"lottery_back/pkg/config"
 	"lottery_back/pkg/util"
 	"os"
 	"strings"
@@ -19,10 +19,10 @@ type Applicant struct {
 
 var applicants []Applicant
 
-func loadApplicants(server *server.Server) {
+func loadApplicants(config config.Config) {
 	applicants = []Applicant{}
 
-	f, err := os.Open(server.Config.ResourcePath.Applicant)
+	f, err := os.Open(config.ResourcePath.Applicant)
 
 	util.CheckFatalError(err)
 	defer f.Close()
@@ -34,16 +34,17 @@ func loadApplicants(server *server.Server) {
 
 	i := 0
 	for {
-		// 見出し行スキップ
-		if i == 0 {
-			continue
-		}
-
 		record, err := reader.Read() // 1行読み出す
 		if err == io.EOF {
 			break
 		} else {
 			util.CheckFatalError(err)
+		}
+
+		// 見出し行スキップ
+		if i == 0 {
+			i++
+			continue
 		}
 
 		class := strings.Join([]string{strings.Replace(record[5], "年", "", -1), record[6]}, "")

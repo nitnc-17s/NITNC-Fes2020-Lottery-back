@@ -1,4 +1,4 @@
-package server
+package config
 
 import (
 	"lottery_back/pkg/util"
@@ -7,7 +7,7 @@ import (
 	"github.com/go-yaml/yaml"
 )
 
-type config struct {
+type Config struct {
 	Server struct {
 		Host []string `yaml:"host"`
 	} `yaml:"server"`
@@ -20,14 +20,14 @@ type config struct {
 	} `yaml:"resource_path"`
 }
 
-func loadConfig() *config {
+func LoadConfig() Config {
 	f, err := os.Open("conf/Config.yaml")
 	util.CheckFatalError(err)
 	defer f.Close()
 
-	var cfg config
+	var cfg Config
 	err = yaml.NewDecoder(f).Decode(&cfg)
 	util.CheckFatalError(err)
 
-	return &cfg
+	return cfg
 }

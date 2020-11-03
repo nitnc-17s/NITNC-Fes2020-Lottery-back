@@ -2,6 +2,8 @@ package main
 
 import (
 	"log"
+	"lottery_back/pkg/config"
+	"lottery_back/pkg/model"
 	"lottery_back/pkg/server"
 
 	"github.com/comail/colog"
@@ -16,5 +18,11 @@ func main() {
 	})
 	colog.Register()
 
-	new(server.Server).Up()
+	// Load Config file
+	cfg := config.LoadConfig()
+
+	// Model Initialization
+	model.Init(cfg)
+
+	new(server.Server).Up(cfg)
 }
