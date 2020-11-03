@@ -18,7 +18,7 @@ dev-logs:
 	docker logs $(DEVNAME)
 
 main-image:
-	docker build -f ./build/Dockerfile --target main -t $(NAME):$(VERSION) .
+	docker build -f ./build/Dockerfile --target app -t $(NAME):$(VERSION) .
 
 main-start:
 	docker run -itd -p 8080:8080 --name $(NAME) $(NAME):$(VERSION)

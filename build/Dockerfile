@@ -15,14 +15,15 @@ COPY ./cmd/ ./cmd/
 COPY ./pkg/ ./pkg/
 COPY ./conf/ ./conf/
 COPY ./public/ ./public/
+COPY ./private/ ./private/
 
-RUN CGO_ENABLED=0 go build -o /go/bin/lottery_back ./cmd/lottery_back_app/
+RUN CGO_ENABLED=0 go build -o /go/bin/lottery_back ./cmd/lottery_app/
 
 
 FROM alpine:3.12 as app
-COPY --from=builder /go/bin/lotery-back .
+COPY --from=builder /go/bin/lottery_back .
 COPY --from=builder /go/src/lottery_back/conf/ ./conf/
-COPY --from=builder /go/src/lottery_back/public/ ./public/
-ENTRYPOINT [ "./lotery-back" ]
+COPY --from=builder /go/src/lottery_back/private/ ./private/
+ENTRYPOINT [ "./lottery_back" ]
 
 EXPOSE 8080
