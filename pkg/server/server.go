@@ -5,10 +5,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type Server struct {
+	engine *gin.Engine
+	config config
+
+	wsApp WsApp
+}
+
 // Up start server
-func Up() {
-	server := gin.Default()
-	wsApp := GenerateWsApp()
+func (server *Server) Up() {
+	server.engine = gin.Default()
+	server.wsApp = GenerateWsApp()
 
 	// Load config file
 	cfg := loadConfig()
@@ -16,11 +23,11 @@ func Up() {
 	// CORS setup
 	corsConfig := cors.DefaultConfig()
 	corsConfig.AllowOrigins = cfg.Server.Host
-	server.Use(cors.New(corsConfig))
+	server.engine.Use(cors.New(corsConfig))
 
-	wsApp.setRoutes(server)
+	server.setRoutes()
 
-	go wsApp.messageSender()
+	go server.wsApp.messageSender()
 
-	server.Run(":8080")
+	server.engine.Run(":8080")
 }
