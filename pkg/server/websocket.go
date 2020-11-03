@@ -69,6 +69,8 @@ func (wsApp *WsApp) messageSender() {
 
 		data := <-wsApp.sender
 
+		log.Println("debug: ", data) // For debug
+
 		// 現在接続しているクライアント全てにメッセージを送信する
 		for client := range wsApp.clients {
 			err := client.WriteJSON(data)

@@ -1,12 +1,11 @@
 package main
 
 import (
+	"github.com/comail/colog"
 	"log"
 	"lottery_back/pkg/config"
 	"lottery_back/pkg/model"
 	"lottery_back/pkg/server"
-
-	"github.com/comail/colog"
 )
 
 func main() {

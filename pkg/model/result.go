@@ -17,7 +17,7 @@ func initResults() {
 	results = make(map[int]Result)
 }
 
-func getResult(prizeId int) (Result, error) {
+func GetResult(prizeId int) (Result, error) {
 	res, ok := results[prizeId]
 
 	// 既に抽選結果があるとき
@@ -26,12 +26,14 @@ func getResult(prizeId int) (Result, error) {
 	}
 
 	// 抽選結果がないとき
-	prize, err := getPrize(prizeId)
+	prize, err := GetPrize(prizeId)
 	if err != nil {
 		return Result{}, err
 	}
 
 	res = Result{Prize: prize}
+
+	results[prizeId] = res
 	res.lottery()
 
 	return res, nil
@@ -43,7 +45,7 @@ func (result *Result) lottery() {
 	rand.Seed(time.Now().UnixNano())
 	winnerId := rand.Intn(l)
 
-	applicant, err := getApplicant(winnerId)
+	applicant, err := GetApplicant(winnerId)
 	if err != nil {
 		log.Printf("warn: %v", err)
 		return

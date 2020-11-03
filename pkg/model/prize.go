@@ -57,7 +57,7 @@ func loadPrizes(config config.Config) {
 	log.Printf("debug: finished prizes loading")
 }
 
-func getPrize(id int) (Prize, error) {
+func GetPrize(id int) (Prize, error) {
 	for _, prize := range prizes {
 		if prize.Id == id {
 			return prize, nil

@@ -57,7 +57,7 @@ func loadApplicants(config config.Config) {
 	log.Printf("debug: finished applicants loading")
 }
 
-func getApplicant(id int) (Applicant, error) {
+func GetApplicant(id int) (Applicant, error) {
 	if id >= len(applicants) || id < 0 {
 		return Applicant{}, errors.New("invalid id")
 	}
