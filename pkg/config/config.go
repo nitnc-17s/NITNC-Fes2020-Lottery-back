@@ -21,7 +21,7 @@ type Config struct {
 }
 
 func LoadConfig() Config {
-	f, err := os.Open("conf/Config.yaml")
+	f, err := os.Open("conf/config.yaml")
 	util.CheckFatalError(err)
 	defer f.Close()
 
