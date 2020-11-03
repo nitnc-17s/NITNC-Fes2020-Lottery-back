@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"lottery_back/pkg/model"
 )
 
 type Server struct {
@@ -28,6 +29,8 @@ func (server *Server) Up() {
 	server.setRoutes()
 
 	go server.WsApp.messageSender()
+
+	model.Init(server)
 
 	server.Engine.Run(":8080")
 }

@@ -2,6 +2,7 @@ package model
 
 import (
 	"encoding/csv"
+	"errors"
 	"io"
 	"log"
 	"lottery_back/pkg/server"
@@ -11,13 +12,13 @@ import (
 )
 
 type Prize struct {
-	id   int
-	name string
+	Id   int    `json:"id"`
+	Name string `json:"name"`
 }
 
 var prizes []Prize
 
-func loadPrizes(server server.Server) {
+func loadPrizes(server *server.Server) {
 	prizes = []Prize{}
 
 	f, err := os.Open(server.Config.ResourcePath.Prize)
@@ -28,7 +29,7 @@ func loadPrizes(server server.Server) {
 	reader := csv.NewReader(f)
 	reader.LazyQuotes = true // ダブルクオートを厳密にチェックしない
 
-	log.Printf("info: start prizes loading")
+	log.Printf("debug: start prizes loading")
 
 	i := 0
 	for {
@@ -47,11 +48,21 @@ func loadPrizes(server server.Server) {
 		id, err := strconv.Atoi(record[0])
 		util.CheckFatalError(err)
 
-		prize := Prize{id: id, name: record[2]}
+		prize := Prize{Id: id, Name: record[2]}
 		prizes = append(prizes, prize)
 
 		i++
 	}
 
-	log.Printf("info: finished prizes loading")
+	log.Printf("debug: finished prizes loading")
+}
+
+func getPrize(id int) (Prize, error) {
+	for _, prize := range prizes {
+		if prize.Id == id {
+			return prize, nil
+		}
+	}
+
+	return Prize{}, errors.New("invalid id")
 }

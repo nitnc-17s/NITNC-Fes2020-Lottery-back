@@ -2,6 +2,7 @@ package model
 
 import (
 	"encoding/csv"
+	"errors"
 	"io"
 	"log"
 	"lottery_back/pkg/server"
@@ -11,14 +12,14 @@ import (
 )
 
 type Applicant struct {
-	name         string
-	nameFurigana string
-	class        string
+	Name         string `json:"name"`
+	NameFurigana string `json:"name_furigana"`
+	Class        string `json:"class"`
 }
 
 var applicants []Applicant
 
-func loadApplicants(server server.Server) {
+func loadApplicants(server *server.Server) {
 	applicants = []Applicant{}
 
 	f, err := os.Open(server.Config.ResourcePath.Applicant)
@@ -29,7 +30,7 @@ func loadApplicants(server server.Server) {
 	reader := csv.NewReader(f)
 	reader.LazyQuotes = true // ダブルクオートを厳密にチェックしない
 
-	log.Printf("info: start applicants loading")
+	log.Printf("debug: start applicants loading")
 
 	i := 0
 	for {
@@ -46,11 +47,23 @@ func loadApplicants(server server.Server) {
 		}
 
 		class := strings.Join([]string{strings.Replace(record[5], "年", "", -1), record[6]}, "")
-		applicant := Applicant{name: record[4], nameFurigana: record[7], class: class}
+		applicant := Applicant{Name: record[4], NameFurigana: record[7], Class: class}
 		applicants = append(applicants, applicant)
 
 		i++
 	}
 
-	log.Printf("info: finished applicants loading")
+	log.Printf("debug: finished applicants loading")
+}
+
+func getApplicant(id int) (Applicant, error) {
+	if id >= len(applicants) || id < 0 {
+		return Applicant{}, errors.New("invalid id")
+	}
+
+	res := applicants[id]
+
+	applicants = append(applicants[:id], applicants[id+1:]...)
+
+	return res, nil
 }
