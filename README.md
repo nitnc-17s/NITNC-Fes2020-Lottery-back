@@ -121,12 +121,14 @@
   - コマンド一覧
     - `init`
       - 無を表示する
-    - `prize-id`
+    - `show id`
       - 景品番号
-    - `prize-name`
+    - `show prize`
       - 景品番号
       - 景品名
-    - `lottery`
+    - `show winner`
       - 景品番号
       - 景品名
       - 当選者名
+    - `lottery`
+      - 抽選の実施のみ
