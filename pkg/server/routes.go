@@ -5,9 +5,9 @@ import (
 	"net/http"
 )
 
-func (app *App) setRoutes(server *gin.Engine) {
+func (wsApp *WsApp) setRoutes(server *gin.Engine) {
 	server.GET("/ws", func(ctx *gin.Context) {
-		app.handleConnections(ctx.Writer, ctx.Request)
+		wsApp.wsHandler(ctx.Writer, ctx.Request)
 	})
 
 	server.GET("/ping", func(ctx *gin.Context) {

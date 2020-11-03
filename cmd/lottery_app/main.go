@@ -16,6 +16,5 @@ func main() {
 	})
 	colog.Register()
 
-	app := server.Generate()
-	app.Up()
+	server.Up()
 }

@@ -6,8 +6,9 @@ import (
 )
 
 // Up start server
-func (app *App) Up() {
+func Up() {
 	server := gin.Default()
+	wsApp := GenerateWsApp()
 
 	// Load config file
 	cfg := loadConfig()
@@ -17,9 +18,9 @@ func (app *App) Up() {
 	corsConfig.AllowOrigins = cfg.Server.Host
 	server.Use(cors.New(corsConfig))
 
-	app.setRoutes(server)
+	wsApp.setRoutes(server)
 
-	go app.handleMessages()
+	go wsApp.messageSender()
 
 	server.Run(":8080")
 }
