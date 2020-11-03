@@ -69,11 +69,15 @@
 
 ```json
 {
-  "prize_id": 0,
-  "prize_name":  "string",
-  "winner_name": "string",
-  "winner_name_furigana": "string",
-  "winner_class": "string"
+  "prize": {
+    "id": 0,
+    "name": "string"
+  },
+  "winner": {
+    "name": "string",
+    "name_furigana": "string",
+    "class": "string"
+  }
 }
 ```
 
@@ -101,7 +105,7 @@
 {
   "api_key": "string",
   "prize_id": 0,
-  "operate": "string"
+  "operation": "string"
 }
 ```
 
