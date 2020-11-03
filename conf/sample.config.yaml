@@ -3,3 +3,7 @@ server:
     - "https://example.com"
 api:
   key: "pD1rfI18T/ob0QyM1zcdtUbSUW7zbkFZ" # `openssl rand -base64 24`
+resource_path:
+  applicant: "private/applicants.csv"
+  prize: "private/prizes.csv"
+

@@ -35,7 +35,7 @@ type JSONData interface{} // もう少しマシな書き方がある気がする
 func (wsApp *WsApp) wsHandler(w http.ResponseWriter, r *http.Request) {
 	ws, err := wsApp.upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		log.Println(err)
+		log.Printf("error: %v", err)
 		return
 	}
 
@@ -47,6 +47,7 @@ func (wsApp *WsApp) wsHandler(w http.ResponseWriter, r *http.Request) {
 	for {
 		_, _, err := ws.ReadMessage() // 無を受け取る
 		if err != nil {
+			log.Printf("warn: %v", err)
 			break
 		}
 	}
@@ -57,11 +58,11 @@ func (wsApp *WsApp) messageSender() {
 	// 送信処理維持用ループ
 	for {
 		/*
-			jsonData := <- wsApp.sender
+			jsonData := <- WsApp.sender
 
 			jsonMsg, err := json.Marshal(jsonData)
 			if err != nil {
-				log.Printf("error: %v", err)
+				log.Printf("warn: %v", err)
 				continue
 			}
 		*/
@@ -72,7 +73,7 @@ func (wsApp *WsApp) messageSender() {
 		for client := range wsApp.clients {
 			err := client.WriteJSON(data)
 			if err != nil {
-				log.Printf("error: %v", err)
+				log.Printf("warn: %v", err)
 				client.Close()
 				delete(wsApp.clients, client)
 			}

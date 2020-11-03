@@ -1,7 +1,7 @@
 package server
 
 import (
-	"log"
+	"lottery_back/pkg/util"
 	"os"
 
 	"github.com/go-yaml/yaml"
@@ -14,23 +14,20 @@ type config struct {
 	Api struct {
 		Key string `yaml:"key"`
 	} `yaml:"api"`
+	ResourcePath struct {
+		Applicant string `yaml:"applicant"`
+		Prize     string `yaml:"prize"`
+	} `yaml:"resource_path"`
 }
 
 func loadConfig() *config {
-	f, err := os.Open("conf/config.yaml")
-	if err != nil {
-		log.Fatal("Config Open error:", err)
-		return nil
-	}
+	f, err := os.Open("conf/Config.yaml")
+	util.CheckFatalError(err)
 	defer f.Close()
 
 	var cfg config
 	err = yaml.NewDecoder(f).Decode(&cfg)
-
-	if err != nil {
-		log.Fatal("Config Parse error:", err)
-		return nil
-	}
+	util.CheckFatalError(err)
 
 	return &cfg
 }

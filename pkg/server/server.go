@@ -6,28 +6,28 @@ import (
 )
 
 type Server struct {
-	engine *gin.Engine
-	config config
+	Engine *gin.Engine
+	Config config
 
-	wsApp WsApp
+	WsApp WsApp
 }
 
 // Up start server
 func (server *Server) Up() {
-	server.engine = gin.Default()
-	server.wsApp = GenerateWsApp()
+	server.Engine = gin.Default()
+	server.WsApp = GenerateWsApp()
 
-	// Load config file
+	// Load Config file
 	cfg := loadConfig()
 
 	// CORS setup
 	corsConfig := cors.DefaultConfig()
 	corsConfig.AllowOrigins = cfg.Server.Host
-	server.engine.Use(cors.New(corsConfig))
+	server.Engine.Use(cors.New(corsConfig))
 
 	server.setRoutes()
 
-	go server.wsApp.messageSender()
+	go server.WsApp.messageSender()
 
-	server.engine.Run(":8080")
+	server.Engine.Run(":8080")
 }
