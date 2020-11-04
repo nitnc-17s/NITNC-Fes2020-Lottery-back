@@ -6,7 +6,7 @@ dev-build:
 	docker build -f ./build/Dockerfile --target develop -t $(DEVNAME):$(VERSION) .
 
 dev-run:
-	docker run -it -p 8080:8080 --name $(DEVNAME) $(DEVNAME):$(VERSION)
+	docker run --rm -it -p 8080:8080 --name $(DEVNAME) $(DEVNAME):$(VERSION)
 
 dev-stop:
 	docker stop $(DEVNAME)
