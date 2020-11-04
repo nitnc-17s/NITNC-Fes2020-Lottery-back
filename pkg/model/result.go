@@ -34,12 +34,20 @@ func GetResult(prizeId int) (Result, error) {
 	res = Result{Prize: prize}
 
 	results[prizeId] = res
-	res.lottery()
+
+	err = res.Lottery()
+	if err != nil {
+		return Result{}, err
+	}
 
 	return res, nil
 }
 
-func (result *Result) lottery() {
+func GetEmptyResult() Result {
+	return Result{Prize: Prize{Id: -1, Name: ""}, Winner: Applicant{Name: "", NameFurigana: "", Class: ""}}
+}
+
+func (result *Result) Lottery() error {
 	l := len(applicants)
 
 	rand.Seed(time.Now().UnixNano())
@@ -48,8 +56,23 @@ func (result *Result) lottery() {
 	applicant, err := GetApplicant(winnerId)
 	if err != nil {
 		log.Printf("warn: %v", err)
-		return
+		return err
 	}
 
 	result.Winner = applicant
+	return nil
+}
+
+func (result *Result) GetPrizeMaskedResult() Result {
+	response := result.GetWinnerMaskedResult()
+
+	response.Prize.Name = ""
+	return response
+}
+
+func (result *Result) GetWinnerMaskedResult() Result {
+	response := *result
+
+	response.Winner = Applicant{}
+	return response
 }
