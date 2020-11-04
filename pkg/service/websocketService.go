@@ -32,6 +32,8 @@ func GenerateWsApp() {
 		},
 		sender: make(chan JSONData),
 	}
+
+	go WebsocketApp.messageSender()
 }
 
 // wsHandler is websocket connection handler
