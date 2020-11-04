@@ -1,4 +1,4 @@
-package server
+package service
 
 import (
 	"github.com/gin-gonic/gin"
@@ -16,9 +16,14 @@ type WsApp struct {
 	sync.RWMutex
 }
 
+// JSONData is JSON formatted data
+type JSONData interface{}
+
+var WebsocketApp WsApp
+
 // GenerateWsApp is websocket app generate
-func GenerateWsApp() WsApp {
-	return WsApp{
+func GenerateWsApp() {
+	WebsocketApp = WsApp{
 		clients: make(map[*websocket.Conn]bool),
 		upgrader: websocket.Upgrader{
 			CheckOrigin: func(r *http.Request) bool {
@@ -29,14 +34,12 @@ func GenerateWsApp() WsApp {
 	}
 }
 
-// JSONData is JSON formatted data
-type JSONData interface{} // もう少しマシな書き方がある気がする
-
 // wsHandler is websocket connection handler
-func (wsApp *WsApp) wsHandler(ctx *gin.Context) {
+func (wsApp *WsApp) WebSocketHandler(ctx *gin.Context) {
 	ws, err := wsApp.upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
 	if err != nil {
 		log.Printf("error: %v", err)
+		ctx.String(http.StatusBadRequest, "Can't upgrade websocket\n", err)
 		return
 	}
 

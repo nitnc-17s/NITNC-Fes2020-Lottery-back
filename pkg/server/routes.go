@@ -7,8 +7,7 @@ import (
 )
 
 func (server *Server) setRoutes() {
-	server.Engine.GET("/ws", server.WsApp.wsHandler)
-
+	server.Engine.GET("/ws", controller.WebSocketConnector)
 	server.Engine.POST("/operation", controller.OperationReceiver)
 
 	server.Engine.GET("/ping", func(ctx *gin.Context) {
