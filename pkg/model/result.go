@@ -33,8 +33,6 @@ func GetResult(prizeId int) (Result, error) {
 
 	res = Result{Prize: prize}
 
-	results[prizeId] = res
-
 	err = res.Lottery()
 	if err != nil {
 		return Result{}, err
@@ -60,6 +58,7 @@ func (result *Result) Lottery() error {
 	}
 
 	result.Winner = applicant
+	results[result.Prize.Id] = *result
 	return nil
 }
 

@@ -22,6 +22,8 @@ func WebSocketSender(prizeId int, operation string) error {
 		result = result.GetPrizeMaskedResult()
 	case "show prize":
 		result = result.GetWinnerMaskedResult()
+	case "show winner":
+
 	}
 
 	WebsocketApp.sender <- result
