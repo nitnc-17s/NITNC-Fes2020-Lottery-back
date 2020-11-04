@@ -4,8 +4,8 @@ import (
 	"lottery_back/pkg/config"
 )
 
-func Init(config config.Config) {
-	loadApplicants(config)
-	loadPrizes(config)
+func Init() {
+	loadApplicants(config.ConfigData)
+	loadPrizes(config.ConfigData)
 	initResults()
 }

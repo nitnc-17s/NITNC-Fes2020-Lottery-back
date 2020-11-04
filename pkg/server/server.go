@@ -15,13 +15,13 @@ type Server struct {
 }
 
 // Up start server
-func (server *Server) Up(cfg config.Config) {
+func (server *Server) Up() {
 	server.Engine = gin.Default()
 	server.WsApp = GenerateWsApp()
 
 	// CORS setup
 	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowOrigins = cfg.Server.Host
+	corsConfig.AllowOrigins = config.ConfigData.Server.Host
 	server.Engine.Use(cors.New(corsConfig))
 
 	server.setRoutes()

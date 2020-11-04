@@ -20,14 +20,13 @@ type Config struct {
 	} `yaml:"resource_path"`
 }
 
-func LoadConfig() Config {
+var ConfigData Config
+
+func LoadConfig() {
 	f, err := os.Open("conf/config.yaml")
 	util.CheckFatalError(err)
 	defer f.Close()
 
-	var cfg Config
-	err = yaml.NewDecoder(f).Decode(&cfg)
+	err = yaml.NewDecoder(f).Decode(&ConfigData)
 	util.CheckFatalError(err)
-
-	return cfg
 }

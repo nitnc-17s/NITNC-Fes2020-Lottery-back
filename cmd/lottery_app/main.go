@@ -18,10 +18,10 @@ func main() {
 	colog.Register()
 
 	// Load Config file
-	cfg := config.LoadConfig()
+	config.LoadConfig()
 
 	// Model Initialization
-	model.Init(cfg)
+	model.Init()
 
-	new(server.Server).Up(cfg)
+	new(server.Server).Up()
 }
