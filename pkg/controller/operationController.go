@@ -5,6 +5,7 @@ import (
 	"lottery_back/pkg/config"
 	"lottery_back/pkg/service"
 	"net/http"
+	"strings"
 )
 
 type OperationPostRequest struct {
@@ -14,6 +15,11 @@ type OperationPostRequest struct {
 }
 
 func OperationReceiver(ctx *gin.Context) {
+	if !strings.Contains(ctx.Request.Header.Get("Content-Type"), "application/json") {
+		ctx.String(http.StatusBadRequest, "Request \"Content-Type\" is not \"application/json\"")
+		return
+	}
+
 	req := OperationPostRequest{}
 	err := ctx.Bind(&req)
 	if err != nil {
