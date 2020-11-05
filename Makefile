@@ -2,11 +2,11 @@ DEVNAME=lottery-back-dev
 NAME=lottery-back
 VERSION=1.0
 
-dev-image:
+dev-build:
 	docker build -f ./build/Dockerfile --target develop -t $(DEVNAME):$(VERSION) .
 
 dev-run:
-	docker run -it -v .:/go/src/lottery_back -p 8080:8080 --name $(DEVNAME) $(DEVNAME):$(VERSION)
+	docker run --rm -it -p 8080:8080 --name $(DEVNAME) $(DEVNAME):$(VERSION)
 
 dev-stop:
 	docker stop $(DEVNAME)
@@ -17,11 +17,18 @@ dev-remove:
 dev-logs:
 	docker logs $(DEVNAME)
 
-main-image:
-	docker build -f ./build/Dockerfile --target main -t $(NAME):$(VERSION) .
+main-build:
+	docker build -f ./build/Dockerfile --target app -t $(NAME):$(VERSION) .
 
 main-start:
 	docker run -itd -p 8080:8080 --name $(NAME) $(NAME):$(VERSION)
+
+main-start!:
+	docker run -it --rm -p 8080:8080 --name $(NAME) $(NAME):$(VERSION)
+
+main-up:
+	docker build -f ./build/Dockerfile --target app -t $(NAME):$(VERSION) .
+	docker run -itd -p 3000:3000 --name $(NAME) $(NAME):$(VERSION)
 
 main-stop:
 	docker stop $(NAME)
