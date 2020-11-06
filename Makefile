@@ -1,6 +1,6 @@
 DEVNAME=lottery-back-dev
 NAME=lottery-back
-VERSION=1.0
+VERSION=1.1
 
 dev-build:
 	docker build -f ./build/Dockerfile --target develop -t $(DEVNAME):$(VERSION) .
