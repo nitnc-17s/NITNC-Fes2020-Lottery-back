@@ -13,6 +13,7 @@ func WebSocketSender(prizeId int, operation string) error {
 
 	switch operation {
 	case "init":
+		model.Init()
 		result = model.GetEmptyResult()
 	case "show id":
 		result = result.GetPrizeMaskedResult()

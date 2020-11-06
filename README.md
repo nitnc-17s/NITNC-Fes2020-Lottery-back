@@ -2,8 +2,6 @@
 
 ## フロントエンド
 
-`https://crow31415.net`
-
 ### /view/public
 
 #### 概要
@@ -60,8 +58,6 @@
     3. 抽選の実行命令
 
 ## バックエンド
-
-`https://api.crow31415.net`
 
 ### GET(WebSocket) /ws
 
